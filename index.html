@@ -1,1 +1,50 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ASF Pop-up — Cronômetro de treino de pop-up | ASF</title><meta name="description" content="Treine o pop-up em casa com séries guiadas, cronômetro e contagem por voz. Satélite do app ASF."><link rel="canonical" href="https://acarolmourad-commits.github.io/asf-popup/"><meta name="theme-color" content="#00A8CC"><style>:root{--p:#00A8CC;--d:#0E2439;--u:#9B59B6;--bg:#F7FBFC;--g:#5A6B7A}*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--d);text-align:center}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #E5EEF2;padding:10px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}nav a{color:var(--p);text-decoration:none;font-weight:700;font-size:13px}nav a.on{color:var(--u)}header{background:linear-gradient(135deg,var(--p),var(--u));color:#fff;padding:36px 20px 26px}.wrap{max-width:480px;margin:0 auto;padding:28px 16px 60px}.timer{font-size:88px;font-weight:800;color:var(--p);font-variant-numeric:tabular-nums}.fase{font-size:14px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--u)}button{background:linear-gradient(135deg,var(--p),var(--u));color:#fff;border:0;padding:14px 30px;border-radius:999px;font-weight:800;font-size:16px;cursor:pointer;margin:6px}.ghost{background:#fff;color:var(--p);border:2px solid var(--p)}.muted{color:var(--g);font-size:12.5px;margin-top:14px}footer{font-size:12.5px;color:var(--g);padding:24px;border-top:1px solid #E5EEF2}</style></head><body><nav><a href="https://acarolmourad-commits.github.io/asf-app/">🏄 App</a><a class="on" href="https://acarolmourad-commits.github.io/asf-popup/">⏱️ Pop-up</a><a href="https://acarolmourad-commits.github.io/asf-treino/">🏋️ Treino</a><a href="https://acarolmourad-commits.github.io/asf-manobras/">⚡ Manobras</a><a href="https://acarolmourad-commits.github.io/asf-yoga/">🧘‍♀️ Yoga</a></nav><header><h1>⏱️ Treino de pop-up</h1><p>Séries guiadas: 10 pop-ups, 30s de descanso, 3 rodadas.</p></header><main class="wrap"><div class="fase" id="fase">Pronta?</div><div class="timer" id="t">00</div><div class="muted" id="rep">Pop-ups: 0 · Rodada: 0/3</div><button onclick="start()">Começar ▶️</button><button class="ghost" onclick="reset()">Reiniciar</button><p class="muted">A cada bipe, faça 1 pop-up completo. Voz ativada se o navegador permitir. Combine com a semana do <a href="https://acarolmourad-commits.github.io/asf-treino/" style="color:var(--p)">ASF Treino</a>.</p></main><footer>🌊 ASF · <a href="https://acarolmourad-commits.github.io/" style="color:var(--p)">Hub de apps</a></footer><script>let tm,fase=0,rep=0,rod=0;function fala(s){try{speechSynthesis.speak(new SpeechSynthesisUtterance(s));}catch(e){}}function att(){document.getElementById('rep').textContent='Pop-ups: '+rep+' · Rodada: '+rod+'/3';}function tick(s,nome,prox){const t=document.getElementById('t');document.getElementById('fase').textContent=nome;let n=s;t.textContent=String(n).padStart(2,'0');clearInterval(tm);tm=setInterval(()=>{n--;t.textContent=String(Math.max(0,n)).padStart(2,'0');if(n<=3&&n>0){try{new AudioContext().resume();}catch(e){}}if(n<=0){clearInterval(tm);prox();}},1000);}function start(){rod=1;rep=0;att();serie();}function serie(){if(rod>3){document.getElementById('fase').textContent='🏆 Treino completo!';fala('Treino completo. Mandou bem!');return;}rep+=10;att();fala('Série '+rod+'. Dez pop-ups, vai!');tick(20,'Série '+rod+' — POP-UPS!',()=>descansa());}function descansa(){fala('Descanso');tick(30,'Descanso 😮‍💨',()=>{rod++;serie();});}function reset(){clearInterval(tm);fase=0;rep=0;rod=0;document.getElementById('fase').textContent='Pronta?';document.getElementById('t').textContent='00';att();}</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASF Pop-up — ASF</title>
+<meta name="description" content="Cronômetro de treino de pop-up com séries guiadas">
+<style>
+:root{--rosa:#ff4d8d;--roxo:#7b2ff7;--areia:#fff5ec;--mar:#00c2cb}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:linear-gradient(160deg,#fff5ec,#ffe3f1 60%,#e0f7fa);min-height:100vh;color:#333}
+header{background:linear-gradient(90deg,var(--rosa),var(--roxo));color:#fff;padding:2rem 1rem;text-align:center}
+header h1{font-size:2rem} header p{opacity:.9;margin-top:.4rem}
+nav{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center;padding:.7rem;background:#fff;box-shadow:0 2px 8px #0001;position:sticky;top:0;z-index:10}
+nav a{background:var(--areia);border:1px solid #ffd3e6;color:#c2185b;padding:.25rem .6rem;border-radius:20px;font-size:.72rem;text-decoration:none}
+main{max-width:760px;margin:1.5rem auto;padding:0 1rem}
+.card{background:#fff;border-radius:16px;padding:1.4rem;box-shadow:0 4px 16px #7b2ff720;margin-bottom:1.2rem}
+.card h2{color:var(--roxo);margin-bottom:.6rem;font-size:1.2rem}
+button{background:linear-gradient(90deg,var(--rosa),var(--roxo));color:#fff;border:none;padding:.6rem 1.2rem;border-radius:24px;font-size:1rem;cursor:pointer;margin:.2rem}
+.xp{position:fixed;bottom:1rem;right:1rem;background:#fff;border:2px solid var(--rosa);border-radius:24px;padding:.4rem 1rem;font-weight:bold;color:var(--roxo);box-shadow:0 4px 12px #0002}
+footer{text-align:center;padding:2rem;font-size:.8rem;color:#888}
+</style>
+</head>
+<body>
+<header><h1>🏃‍♀️ ASF Pop-up</h1><p>Cronômetro de treino de pop-up com séries guiadas</p></header>
+<nav><a href="https://acarolmourad-commits.github.io/asf-app/">🏄‍♀️ ASF App</a>
+<a href="https://acarolmourad-commits.github.io/">🌐 Hub</a>
+<a href="https://acarolmourad-commits.github.io/asf-ranking/">🏆 Ranking</a>
+<a href="https://acarolmourad-commits.github.io/asf-treino/">Treino</a>
+<a href="https://acarolmourad-commits.github.io/asf-manobras/">Manobras</a>
+<a href="https://acarolmourad-commits.github.io/asf-yoga/">Yoga</a></nav>
+<main>
+<div class="card"><h2>⚡ Treino: pop-up perfeito</h2><p>O movimento mais importante do surf! Deite de bruços, mãos na altura do peito, e suba num movimento só.</p>
+<p style="text-align:center;font-size:3rem;font-weight:bold;color:var(--roxo)" id="timer">⏱️</p>
+<p style="text-align:center">Série <b id="serie">0</b>/3 · Pop-ups na série: <b id="cont">0</b></p>
+<div style="text-align:center"><button id="btn" onclick="iniciar()">▶️ Iniciar série (30s)</button>
+<button onclick="pop()" style="background:#43a047">+1 pop-up!</button></div></div>
+<div class="card"><h2>📈 Sua evolução</h2><div id="hist"></div><p>Melhore a técnica na trilha do <a href='https://acarolmourad-commits.github.io/asf-manobras/'>ASF Manobras</a> e registre no <a href='https://acarolmourad-commits.github.io/asf-diario/'>ASF Diário</a>.</p></div>
+<div class="card"><h2>🌐 Ecossistema ASF</h2><p>Este app faz parte da constelação ASF. Ganhe XP aqui e veja seu progresso no <a href="https://acarolmourad-commits.github.io/asf-ranking/">ASF Ranking</a>.</p></div>
+</main>
+<div class="xp">⭐ XP: <span id="xp">0</span></div>
+<footer>ASF — Associação de Surf Feminino · <a href="https://acarolmourad-commits.github.io/">hub</a></footer>
+<script>
+const XP=()=>parseInt(localStorage.getItem('asf_xp')||'0');
+function addXP(n){localStorage.setItem('asf_xp',XP()+n);document.getElementById('xp').textContent=XP();}
+document.getElementById('xp').textContent=XP();
+let serie=0,cont=0,ativo=false,iv;const H=JSON.parse(localStorage.getItem('asf_popup')||'[]');function rh(){document.getElementById('hist').innerHTML=H.length?H.slice(-5).reverse().map(h=>`<p>💪 ${h.n} pop-ups na série — ${h.d}</p>`).join(''):'Sem treinos ainda. Bora!';}rh();window.pop=()=>{if(!ativo)return;cont++;document.getElementById('cont').textContent=cont;};window.iniciar=()=>{if(ativo)return;ativo=true;serie++;document.getElementById('serie').textContent=serie;cont=0;document.getElementById('cont').textContent=0;let s=30;const t=document.getElementById('timer');iv=setInterval(()=>{t.textContent=s+'s';if(s<=0){clearInterval(iv);ativo=false;t.textContent='✅';H.push({n:cont,d:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('asf_popup',JSON.stringify(H));rh();addXP(cont>=10?20:10);if(serie>=3){t.textContent='🏆';document.getElementById('serie').textContent='3';serie=0;addXP(15);}},1000);s--;};};
+</script>
+</body>
+</html>
