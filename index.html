@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ASF Pop-up — ASF</title>
 <meta name="description" content="Cronômetro de treino de pop-up com séries guiadas">
+<link rel="canonical" href="https://acarolmourad-commits.github.io/asf-popup/">
 <style>
 :root{--rosa:#ff4d8d;--roxo:#7b2ff7;--areia:#fff5ec;--mar:#00c2cb}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
@@ -20,6 +21,9 @@ button{background:linear-gradient(90deg,var(--rosa),var(--roxo));color:#fff;bord
 .xp{position:fixed;bottom:1rem;right:1rem;background:#fff;border:2px solid var(--rosa);border-radius:24px;padding:.4rem 1rem;font-weight:bold;color:var(--roxo);box-shadow:0 4px 12px #0002}
 footer{text-align:center;padding:2rem;font-size:.8rem;color:#888}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"ASF Pop-up","url":"https://acarolmourad-commits.github.io/asf-popup/","applicationCategory":"SportsApplication","operatingSystem":"Web","inLanguage":"pt-BR","isPartOf":{"@type":"WebSite","name":"ASF — Associação Surf Feminino","url":"https://acarolmourad-commits.github.io/asf-app/"}}
+</script>
 </head>
 <body>
 <header><h1>🏃‍♀️ ASF Pop-up</h1><p>Cronômetro de treino de pop-up com séries guiadas</p></header>
@@ -44,7 +48,7 @@ footer{text-align:center;padding:2rem;font-size:.8rem;color:#888}
 const XP=()=>parseInt(localStorage.getItem('asf_xp')||'0');
 function addXP(n){localStorage.setItem('asf_xp',XP()+n);document.getElementById('xp').textContent=XP();}
 document.getElementById('xp').textContent=XP();
-let serie=0,cont=0,ativo=false,iv;const H=JSON.parse(localStorage.getItem('asf_popup')||'[]');function rh(){document.getElementById('hist').innerHTML=H.length?H.slice(-5).reverse().map(h=>`<p>💪 ${h.n} pop-ups na série — ${h.d}</p>`).join(''):'Sem treinos ainda. Bora!';}rh();window.pop=()=>{if(!ativo)return;cont++;document.getElementById('cont').textContent=cont;};window.iniciar=()=>{if(ativo)return;ativo=true;serie++;document.getElementById('serie').textContent=serie;cont=0;document.getElementById('cont').textContent=0;let s=30;const t=document.getElementById('timer');iv=setInterval(()=>{t.textContent=s+'s';if(s<=0){clearInterval(iv);ativo=false;t.textContent='✅';H.push({n:cont,d:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('asf_popup',JSON.stringify(H));rh();addXP(cont>=10?20:10);if(serie>=3){t.textContent='🏆';document.getElementById('serie').textContent='3';serie=0;addXP(15);}},1000);s--;};};
+let serie=0,cont=0,ativo=false,iv;const H=JSON.parse(localStorage.getItem('asf_popup')||'[]');function rh(){document.getElementById('hist').innerHTML=H.length?H.slice(-5).reverse().map(h=>`<p>💪 ${h.n} pop-ups na série — ${h.d}</p>`).join(''):'Sem treinos ainda. Bora!';}rh();window.pop=()=>{if(!ativo)return;cont++;document.getElementById('cont').textContent=cont;};window.iniciar=()=>{if(ativo)return;ativo=true;serie++;document.getElementById('serie').textContent=serie;cont=0;document.getElementById('cont').textContent=0;let s=30;const t=document.getElementById('timer');iv=setInterval(()=>{t.textContent=s+'s';if(s<=0){clearInterval(iv);ativo=false;t.textContent='✅';H.push({n:cont,d:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('asf_popup',JSON.stringify(H));rh();addXP(cont>=10?20:10);if(serie>=3){t.textContent='🏆';document.getElementById('serie').textContent='3';serie=0;addXP(15);}},1000);s--;};
 </script>
 </body>
 </html>
