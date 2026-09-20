@@ -107,7 +107,34 @@ summary{cursor:pointer;font-weight:600;color:var(--roxo)}
 const XP=()=>parseInt(localStorage.getItem('asf_xp')||'0');
 function addXP(n){localStorage.setItem('asf_xp',XP()+n);document.getElementById('xp').textContent=XP();}
 document.getElementById('xp').textContent=XP();
-let serie=0,cont=0,ativo=false,iv;const H=JSON.parse(localStorage.getItem('asf_popup')||'[]');function rh(){document.getElementById('hist').innerHTML=H.length?H.slice(-5).reverse().map(h=>`<p>💪 ${h.n} pop-ups na série — ${h.d}</p>`).join(''):'Sem treinos ainda. Bora!';}rh();window.pop=()=>{if(!ativo)return;cont++;document.getElementById('cont').textContent=cont;};window.iniciar=()=>{if(ativo)return;ativo=true;serie++;document.getElementById('serie').textContent=serie;cont=0;document.getElementById('cont').textContent=0;let s=30;const t=document.getElementById('timer');iv=setInterval(()=>{t.textContent=s+'s';if(s<=0){clearInterval(iv);ativo=false;t.textContent='✅';H.push({n:cont,d:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('asf_popup',JSON.stringify(H));rh();addXP(cont>=10?20:10);if(serie>=3){t.textContent='🏆';document.getElementById('serie').textContent='3';serie=0;addXP(15);}},1000);s--;};
+let serie=0,cont=0,ativo=false,iv;
+const H=JSON.parse(localStorage.getItem('asf_popup')||'[]');
+function rh(){
+  document.getElementById('hist').innerHTML = H.length
+    ? H.slice(-5).reverse().map(h=>'<p>💪 '+h.n+' pop-ups na série — '+h.d+'</p>').join('')
+    : 'Sem treinos ainda. Bora!';
+}
+rh();
+window.pop=()=>{ if(!ativo) return; cont++; document.getElementById('cont').textContent=cont; };
+window.iniciar=()=>{
+  if(ativo) return;
+  ativo=true; serie++;
+  document.getElementById('serie').textContent=serie;
+  cont=0; document.getElementById('cont').textContent=0;
+  let s=30; const t=document.getElementById('timer');
+  iv=setInterval(()=>{
+    t.textContent=s+'s';
+    if(s<=0){
+      clearInterval(iv); ativo=false; t.textContent='✅';
+      H.push({n:cont, d:new Date().toLocaleDateString('pt-BR')});
+      localStorage.setItem('asf_popup',JSON.stringify(H));
+      rh();
+      addXP(cont>=10?20:10);
+      if(serie>=3){ t.textContent='🏆'; document.getElementById('serie').textContent='3'; serie=0; addXP(15); }
+    }
+    s--;
+  },1000);
+};
 
 /* Conteúdo rotativo: muda automaticamente a cada 5 dias */
 const CICLO=5*24*60*60*1000;
@@ -132,9 +159,9 @@ const DICAS=[
  'No mar, o pop-up acontece em menos de 2 segundos: na dúvida, suba rápido demais em vez de devagar demais.'
 ];
 const idx=Math.floor(Date.now()/CICLO);
-const d=DESAFIOS[idx%DESAFIOS.length], di=DICAS[idx%DICAS.length];
-document.getElementById('dz-t').textContent=d.t;
-document.getElementById('dz-d').textContent=d.d;
+const dz=DESAFIOS[idx%DESAFIOS.length], di=DICAS[idx%DICAS.length];
+document.getElementById('dz-t').textContent=dz.t;
+document.getElementById('dz-d').textContent=dz.d;
 document.getElementById('dica').textContent=di;
 const resto=CICLO-(Date.now()%CICLO);
 const dias=Math.ceil(resto/(24*60*60*1000));
